@@ -28,9 +28,10 @@ class CommentForm extends Component {
         });
     }
     handleCommentSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
-    }
+        this.toggleCommentModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+
+        }
 
     render() {
         return(
@@ -155,7 +156,7 @@ class CommentForm extends Component {
             }
     }
 
-    function RenderComments({dish, comments}) { // if using: function RenderComments({comments}){
+    function RenderComments({comments, addComment, dishId}) { // if using: function RenderComments({comments}){
         if(comments == null) {
             return (
                 <div></div>
@@ -189,7 +190,7 @@ class CommentForm extends Component {
                 </ul>
 
                 {/* to display the button for toggling the modal: */} 
-                <CommentForm dish={dish} comments={comments} />
+                <CommentForm dishId={dishId} addComment={addComment} />
                 {/* <CommentForm /> */} 
 
             </div>
@@ -217,14 +218,16 @@ class CommentForm extends Component {
                     </div>                
                 </div>
                 <div className="row">
-                    <div className="col-12 col-md-5 m-1">
+                    
                         <RenderDish dish={props.dish} />
-                    </div>
-                    <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments} />
+                    
+                        <RenderComments comments={props.comments}
+                        addComment={props.addComment}
+                        dishId={props.dish.id}
+                         />
                     </div>
                 </div>
-            </div>
+            
         );
     }
 

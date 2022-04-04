@@ -23,6 +23,7 @@ function About(props) {
 
     const theLeaders = props.leaders.map((leader) => {
         return (
+            
             <RenderLeader leader={leader} />
         );
     });
