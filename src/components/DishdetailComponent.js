@@ -4,6 +4,7 @@ import { Card, CardImg, CardText, CardBody,
     ModalHeader, ModalBody, Label, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 //For Form Validation:
 const required = (val) => val && val.length;
@@ -198,14 +199,27 @@ class CommentForm extends Component {
     }
     
    const DishDetail = (props) => {
-        const dish = props.dish;
-        if(dish == null) {
-            return(
-                <div></div>
-            );
-        }
- 
-        return (
+
+    if (props.isLoading) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.dish != null) {
+            return (
             <div className="container">
                 <div className="row">
                     <Breadcrumb>
@@ -227,7 +241,11 @@ class CommentForm extends Component {
                          />
                     </div>
                 </div>
-            
+                        );
+        }
+    else
+        return (
+            <div></div>
         );
     }
 
